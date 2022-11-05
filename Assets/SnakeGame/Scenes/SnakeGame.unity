@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HeadSnakeSprite: {fileID: -471249736, guid: 18e5bca04745dac4ab0e8f948a2cfb88, type: 3}
+  BodySnakeSprite: {fileID: 0}
+  Food: {fileID: -2026743559, guid: 18e5bca04745dac4ab0e8f948a2cfb88, type: 3}
 --- !u!1 &318945139
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,6 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc81222da5ff0764d9405ddbba2cb27d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snakeMoveEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &318945143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +542,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1723922107}
+  - component: {fileID: 1723922108}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -560,3 +566,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1723922108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723922106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f2c21797b4da4a478b61a1a9318104e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snakeController: {fileID: 0}

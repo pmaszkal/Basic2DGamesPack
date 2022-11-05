@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -21,10 +22,17 @@ public class SnakeController : MonoBehaviour
     private float gridMoveTimer;
     private float gridMoveTimerMax = .5f;
 
+    public V2IntEvent snakeMoveEvent;
+
     private void Awake()
     {
         headSpriteRenderer = GetComponent<SpriteRenderer>();
         headSpriteRenderer.sprite = SnakeGameAssets.instance.HeadSnakeSprite;
+
+        if (snakeMoveEvent == null)
+        {
+            snakeMoveEvent = new V2IntEvent();
+        }
     }
 
     private void OnEnable()
@@ -68,6 +76,8 @@ public class SnakeController : MonoBehaviour
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMovementVector));
+
+            snakeMoveEvent.Invoke(gridPosition);
             gridMoveTimer = 0;
         }
     }
@@ -100,4 +110,9 @@ public class SnakeController : MonoBehaviour
         if (n < 0) n += 360;
         return n;
     }
+}
+
+[System.Serializable]
+public class V2IntEvent : UnityEvent<Vector2Int>
+{
 }
