@@ -302,6 +302,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbfb631a788d4245a19c970bd6e8aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundAudioClipsArray:
+  - sound: 0
+    audioClip: {fileID: 8300000, guid: aa097bbf007f0ad44984e6aad8a98a59, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: 948df53f96b7b5147b482fdaa807de0e, type: 3}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: fe7b8f9218aa5b14f8845ed42c182ccf, type: 3}
   HeadSnakeSprite: {fileID: -471249736, guid: 18e5bca04745dac4ab0e8f948a2cfb88, type: 3}
   BodySnakeSprite: {fileID: 529816869, guid: 18e5bca04745dac4ab0e8f948a2cfb88, type: 3}
   Food: {fileID: -2026743559, guid: 18e5bca04745dac4ab0e8f948a2cfb88, type: 3}

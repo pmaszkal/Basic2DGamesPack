@@ -113,6 +113,7 @@ public class SnakeController : MonoBehaviour
             {
                 bodyLength++;
                 CreateBodyPart();
+                SnakeSoundManager.PlaySound(SnakeSoundManager.Sound.SnakeEat);
             }
 
             if (movePosistionList.Count >= bodyLength + 1)
@@ -129,6 +130,7 @@ public class SnakeController : MonoBehaviour
                     //GAME OVER
                     state = State.dead;
                     SnakeGameManager.Instance.HandleSnakeDeath();
+                    SnakeSoundManager.PlaySound(SnakeSoundManager.Sound.SnakeDie);
                 }
             }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,16 @@ public class SnakeGameAssets : MonoBehaviour
         }
     }
 
+    public SoundAudioClip[] soundAudioClipsArray;
+
     public Sprite HeadSnakeSprite;
     public Sprite BodySnakeSprite;
     public Sprite Food;
+
+    [Serializable]
+    public class SoundAudioClip
+    {
+        public SnakeSoundManager.Sound sound;
+        public AudioClip audioClip;
+    }
 }
