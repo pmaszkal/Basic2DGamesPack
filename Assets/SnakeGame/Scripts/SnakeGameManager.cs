@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SnakeGameManager : MonoBehaviour
 {
@@ -9,23 +8,45 @@ public class SnakeGameManager : MonoBehaviour
     private int points = 0;
     private GridMapManager gridMapManager;
     [SerializeField] private SnakeController snakeController;
+    [SerializeField] private TextMeshProUGUI ScoreText;
+    [SerializeField] private TextMeshProUGUI GameOverText;
+
+    public static SnakeGameManager Instance { get; private set; }
 
     private void Awake()
     {
-        if (snakeController == null)
+        if (Instance != null && Instance != this)
         {
-            snakeController = FindObjectOfType<SnakeController>();
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
         }
 
         gridMapManager = new GridMapManager(gridWidth, gridHeight);
 
+        if (snakeController == null)
+        {
+            snakeController = FindObjectOfType<SnakeController>();
+        }
+        snakeController.Init(gridMapManager);
+        gridMapManager.Init(snakeController);
+
         gridMapManager.FoodEatenEvent.AddListener(AddPoint);
-        snakeController.snakeMoveEvent.AddListener(gridMapManager.HandleSnakeMove);
+        GameOverText.gameObject.SetActive(false);
+    }
+
+    public void HandleSnakeDeath()
+    {
+        GameOverText.gameObject.SetActive(true);
+        Debug.Log("SNAKE IS DEAD");
     }
 
     private void AddPoint()
     {
         points += 1;
+        ScoreText.text = (points * 10).ToString();
         Debug.Log(points);
     }
 }

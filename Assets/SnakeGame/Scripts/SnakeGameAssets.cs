@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class SnakeGameAssets : MonoBehaviour
 {
-    public static SnakeGameAssets instance;
+    public static SnakeGameAssets Instance { get; private set; }
 
     private void Awake()
     {
-        instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     public Sprite HeadSnakeSprite;
