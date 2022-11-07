@@ -88,6 +88,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "FlappyBird",
+            "id": "5e88d8bd-c136-47a4-985f-4e205ce43833",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "aaaa1953-c8f2-4ade-843e-c16de7d70214",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3b4634d2-8e95-4ba0-9b71-f3c6fd37e8e6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

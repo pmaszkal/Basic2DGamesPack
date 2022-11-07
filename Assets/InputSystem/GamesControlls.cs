@@ -110,6 +110,34 @@ public partial class @GamesControlls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""FlappyBird"",
+            ""id"": ""5e88d8bd-c136-47a4-985f-4e205ce43833"",
+            ""actions"": [
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""aaaa1953-c8f2-4ade-843e-c16de7d70214"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3b4634d2-8e95-4ba0-9b71-f3c6fd37e8e6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,6 +148,9 @@ public partial class @GamesControlls : IInputActionCollection2, IDisposable
         m_Snake_Down = m_Snake.FindAction("Down", throwIfNotFound: true);
         m_Snake_Right = m_Snake.FindAction("Right", throwIfNotFound: true);
         m_Snake_Left = m_Snake.FindAction("Left", throwIfNotFound: true);
+        // FlappyBird
+        m_FlappyBird = asset.FindActionMap("FlappyBird", throwIfNotFound: true);
+        m_FlappyBird_Click = m_FlappyBird.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -232,11 +263,48 @@ public partial class @GamesControlls : IInputActionCollection2, IDisposable
         }
     }
     public SnakeActions @Snake => new SnakeActions(this);
+
+    // FlappyBird
+    private readonly InputActionMap m_FlappyBird;
+    private IFlappyBirdActions m_FlappyBirdActionsCallbackInterface;
+    private readonly InputAction m_FlappyBird_Click;
+    public struct FlappyBirdActions
+    {
+        private @GamesControlls m_Wrapper;
+        public FlappyBirdActions(@GamesControlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_FlappyBird_Click;
+        public InputActionMap Get() { return m_Wrapper.m_FlappyBird; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FlappyBirdActions set) { return set.Get(); }
+        public void SetCallbacks(IFlappyBirdActions instance)
+        {
+            if (m_Wrapper.m_FlappyBirdActionsCallbackInterface != null)
+            {
+                @Click.started -= m_Wrapper.m_FlappyBirdActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_FlappyBirdActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_FlappyBirdActionsCallbackInterface.OnClick;
+            }
+            m_Wrapper.m_FlappyBirdActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+            }
+        }
+    }
+    public FlappyBirdActions @FlappyBird => new FlappyBirdActions(this);
     public interface ISnakeActions
     {
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnLeft(InputAction.CallbackContext context);
+    }
+    public interface IFlappyBirdActions
+    {
+        void OnClick(InputAction.CallbackContext context);
     }
 }
