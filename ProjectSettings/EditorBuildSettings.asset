@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/General/Scenes/MainMenu.unity
+    guid: 912a899d16cd1464a9034df726b929b7
+  - enabled: 1
     path: Assets/SnakeGame/Scenes/SnakeGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/FlappyBird/Scenes/FlappyBird.unity
+    guid: e17db1642c5d63748960db87680f54eb
   m_configObjects: {}
