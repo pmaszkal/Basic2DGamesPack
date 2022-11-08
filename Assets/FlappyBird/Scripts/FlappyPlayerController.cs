@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class FlappyPlayerController : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class FlappyPlayerController : MonoBehaviour
     private float maxSpeed = 6f;
     private GameState gameState;
 
-    public FlappyGameStateEvent gameStateChangeEvent;
+    public event Action<GameState> gameStateChangeEvent;
 
     private void Awake()
     {
@@ -47,7 +45,6 @@ public class FlappyPlayerController : MonoBehaviour
     {
         switch (gameState)
         {
-            default:
             case GameState.Idle:
                 StartGame();
                 break;
@@ -55,14 +52,18 @@ public class FlappyPlayerController : MonoBehaviour
             case GameState.Active:
                 Boost();
                 break;
+
+            case GameState.GameOver:
+                break;
         }
     }
 
     private void StartGame()
     {
+        gameState = GameState.Active; //to prevent starting the game twice when quick double click
+        gameStateChangeEvent?.Invoke(GameState.Active);
         rb.isKinematic = false;
         Boost();
-        gameStateChangeEvent.Invoke(GameState.Active);
     }
 
     private void Boost()
@@ -75,20 +76,31 @@ public class FlappyPlayerController : MonoBehaviour
         rb.AddForce(boostForceVector);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void HandleDeath()
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        gameStateChangeEvent?.Invoke(GameState.GameOver);
+        if (rb.velocity.y > 0)
         {
-            Debug.Log("Obstacle");
-        }
-        else if (collision.gameObject.CompareTag("ScoreLine"))
-        {
-            Debug.Log("ScoreLine");
+            rb.velocity = new Vector2(0, 0);
         }
     }
 
-    [System.Serializable]
-    public class FlappyGameStateEvent : UnityEvent<GameState>
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (gameState == GameState.GameOver)
+            return;
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            HandleDeath();
+        }
+        else if (collision.gameObject.CompareTag("ScoreLine"))
+        {
+            HandleGetScore();
+        }
+    }
+
+    private void HandleGetScore()
+    {
+        FlappyGameManager.Instance.AddScore();
     }
 }

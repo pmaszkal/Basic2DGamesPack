@@ -14,7 +14,10 @@ public class FlappyObstacle : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (FlappyGameManager.Instance.gameState == GameState.Active)
+        {
+            transform.Translate(Vector2.left * speed * Time.deltaTime);
+        }
     }
 
     private void OnBecameInvisible()
