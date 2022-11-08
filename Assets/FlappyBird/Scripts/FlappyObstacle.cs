@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlappyObstacle : MonoBehaviour
 {
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 3f;
 
     // Start is called before the first frame update
     private void Start()
@@ -19,6 +19,6 @@ public class FlappyObstacle : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        Debug.Log("invisible");
+        Destroy(gameObject);
     }
 }

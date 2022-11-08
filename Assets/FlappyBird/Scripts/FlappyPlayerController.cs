@@ -12,22 +12,15 @@ public class FlappyPlayerController : MonoBehaviour
 
     public FlappyGameStateEvent gameStateChangeEvent;
 
-    public enum GameState
-    {
-        Idle,
-        Active,
-        GameOver
-    }
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        gameState = GameState.Idle;
         rb.isKinematic = true;
     }
 
     private void Update()
     {
+        gameState = FlappyGameManager.Instance.gameState;
         switch (gameState)
         {
             case GameState.Idle:
@@ -67,10 +60,9 @@ public class FlappyPlayerController : MonoBehaviour
 
     private void StartGame()
     {
-        gameState = GameState.Active;
         rb.isKinematic = false;
         Boost();
-        gameStateChangeEvent.Invoke(gameState);
+        gameStateChangeEvent.Invoke(GameState.Active);
     }
 
     private void Boost()
