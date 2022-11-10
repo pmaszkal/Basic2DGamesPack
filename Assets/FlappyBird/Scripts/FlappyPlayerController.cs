@@ -7,6 +7,7 @@ public class FlappyPlayerController : MonoBehaviour
     [SerializeField] private float boostForce = 100f;
     private float maxSpeed = 6f;
     private GameState gameState;
+    [SerializeField] private GameObject playerSprite;
 
     public event Action<GameState> gameStateChangeEvent;
 
@@ -26,9 +27,11 @@ public class FlappyPlayerController : MonoBehaviour
 
             case GameState.Active:
                 ClampSpeed();
+                HandleRotate();
                 break;
 
             case GameState.GameOver:
+                HandleRotate();
                 break;
         }
     }
@@ -38,6 +41,31 @@ public class FlappyPlayerController : MonoBehaviour
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        }
+    }
+
+    private void HandleRotate()
+    {
+        Vector3 rotation;
+        if (rb.velocity.y > 0)
+        {
+            //rotate upwards instantly
+            rotation = new Vector3(0, 0, 35);
+            playerSprite.transform.rotation = Quaternion.Euler(rotation);
+        }
+        else
+        {
+            //rotate downwards over time
+            rotation = new Vector3(0, 0, -90);
+
+            if (Quaternion.Angle(playerSprite.transform.rotation, Quaternion.Euler(rotation)) > 1f)
+            {
+                playerSprite.transform.rotation = Quaternion.Euler(Vector3.Lerp(playerSprite.transform.eulerAngles, rotation, Time.deltaTime));
+            }
+            else
+            {
+                playerSprite.transform.rotation = Quaternion.Euler(rotation);
+            }
         }
     }
 

@@ -19,7 +19,6 @@ public class FlappyUIManager : MonoBehaviour
 
     private void ShowGameOverMenu()
     {
-        Debug.Log("help");
         GameOverMenu.SetActive(true);
     }
 }
