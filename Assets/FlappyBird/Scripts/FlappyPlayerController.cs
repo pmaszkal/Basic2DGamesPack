@@ -5,15 +5,18 @@ public class FlappyPlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     [SerializeField] private float boostForce = 100f;
-    private float maxSpeed = 6f;
-    private GameState gameState;
     [SerializeField] private GameObject playerSprite;
+    private GameState gameState;
+    private float maxSpeed = 6f;
+    private Animator animator;
 
     public event Action<GameState> gameStateChangeEvent;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        animator.SetBool("isIdle", true);
         rb.isKinematic = true;
     }
 
@@ -88,6 +91,10 @@ public class FlappyPlayerController : MonoBehaviour
 
     private void StartGame()
     {
+        //swap from animation movement to physics rigidbody movement
+        animator.SetBool("isIdle", false);
+        animator.enabled = false;
+
         gameState = GameState.Active; //to prevent starting the game twice when quick double click
         gameStateChangeEvent?.Invoke(GameState.Active);
         rb.isKinematic = false;
